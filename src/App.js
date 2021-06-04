@@ -3,35 +3,41 @@ import { Form, Input, Button, Select, Slider } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
 import "animate.css/animate.css";
-import FormItemLabel from "antd/lib/form/FormItemLabel";
+import IconSlider from "./Slider";
 
 function App() {
   const { Option } = Select;
   const [formLayout, setFormLayout] = useState("vertical");
+  const [typeOfDish, setTypeOfDish] = useState("");
   const [formItemName, setFormItemName] = useState("");
   const [formItemLabel, setFormItemLabel] = useState("");
-
+  let dishName, dishLabel, dishType;
   const onDishChange = (value) => {
     switch (value) {
       case "pizza":
         console.log("pizza");
-        setFormItemName("slices");
-        setFormItemLabel("Number of Slices");
-        return;
+        dishName = "slices";
+        dishType = "pizza";
+        dishLabel = "Number of Slices";
+        break;
 
       case "sandwich":
         console.log("sandwich");
-        setFormItemName("spiceness");
-        setFormItemLabel("Spiceness");
-        return;
+        dishType = "sandwich";
+        dishName = "spiciness";
+        dishLabel = "Spiciness";
+        break;
 
       case "soup":
         console.log("soup");
-        setFormItemName("slices");
-        setFormItemLabel("Number of Slices");
-        return;
+        dishType = "soup";
+        dishName = "slices";
+        dishLabel = "Number of Slices";
+        break;
     }
-    console.log("1st time");
+    setTypeOfDish(dishType);
+    setFormItemName(dishName);
+    setFormItemLabel(dishLabel);
   };
   return (
     <>
@@ -84,7 +90,11 @@ function App() {
           </Form.Item>
           {formItemName !== "" ? (
             <Form.Item name={formItemName} label={formItemLabel}>
-              {FormItemLabel}
+              {typeOfDish === "sandwich" ? (
+                <IconSlider min={0} max={10} className="slider" />
+              ) : (
+                <Input></Input>
+              )}
             </Form.Item>
           ) : null}
           <Form.Item>
