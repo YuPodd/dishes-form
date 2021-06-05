@@ -1,43 +1,40 @@
 import { useState } from "react";
-import { Form, Input, Button, Select, Slider } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
 import "animate.css/animate.css";
-import IconSlider from "./Slider";
+import DependentField from "./components/DependentField";
+import { typesOfDishes } from "./constants/constants";
 
-function App() {
+export default function App() {
   const { Option } = Select;
-  const [formLayout, setFormLayout] = useState("vertical");
-  const [typeOfDish, setTypeOfDish] = useState("");
-  const [formItemName, setFormItemName] = useState("");
-  const [formItemLabel, setFormItemLabel] = useState("");
-  let dishName, dishLabel, dishType;
+  const formLayout = "vertical";
+  const [currentDishType, setCurrentDishType] = useState("");
+  const dishes = typesOfDishes.map(({ name, id }) => {
+    return (
+      <Option value={name} key={id}>
+        {name}
+      </Option>
+    );
+  });
+  let dishType;
   const onDishChange = (value) => {
     switch (value) {
-      case "pizza":
-        console.log("pizza");
-        dishName = "slices";
+      case "Pizza":
         dishType = "pizza";
-        dishLabel = "Number of Slices";
         break;
 
-      case "sandwich":
-        console.log("sandwich");
+      case "Sandwich":
         dishType = "sandwich";
-        dishName = "spiciness";
-        dishLabel = "Spiciness";
         break;
 
-      case "soup":
-        console.log("soup");
+      case "Soup":
         dishType = "soup";
-        dishName = "slices";
-        dishLabel = "Number of Slices";
+        break;
+      default:
         break;
     }
-    setTypeOfDish(dishType);
-    setFormItemName(dishName);
-    setFormItemLabel(dishLabel);
+    setCurrentDishType(dishType);
   };
   return (
     <>
@@ -83,19 +80,11 @@ function App() {
               allowClear
               onChange={onDishChange}
             >
-              <Option value="pizza">Pizza</Option>
-              <Option value="soup">Soup</Option>
-              <Option value="sandwich">Sandwich</Option>
+              {dishes}
             </Select>
           </Form.Item>
-          {formItemName !== "" ? (
-            <Form.Item name={formItemName} label={formItemLabel}>
-              {typeOfDish === "sandwich" ? (
-                <IconSlider min={0} max={10} className="slider" />
-              ) : (
-                <Input></Input>
-              )}
-            </Form.Item>
+          {currentDishType !== "" ? (
+            <DependentField currentDishType={currentDishType} />
           ) : null}
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -108,5 +97,3 @@ function App() {
     </>
   );
 }
-
-export default App;

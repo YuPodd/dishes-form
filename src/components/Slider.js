@@ -1,6 +1,6 @@
 import React from 'react';
 import "antd/dist/antd.css";
-import "./index.css";
+import "../index.css";
 import { Slider } from 'antd';
 import { MinusOutlined, FireOutlined } from '@ant-design/icons';
 
