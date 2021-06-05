@@ -6,25 +6,57 @@ export default function DependentField({ currentDishType }) {
     case "pizza":
       return (
         <>
-          <Form.Item label="Number of slices" name='no_of_slices'>
+          <Form.Item
+            label="Number of slices"
+            name="no_of_slices"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="Diameter">
+          <Form.Item
+            label="Diameter"
+            name="diameter"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
         </>
       );
     case "sandwich":
       return (
-        <Form.Item label="Slices of bread" name='slices_of_bread'>
+        <Form.Item
+          label="Slices of bread"
+          name="slices_of_bread"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
           <Input />
         </Form.Item>
       );
     case "soup":
       return (
-         <Form.Item label="Spiciness" name='spiciness_scale'>
-         <IconSlider max={10} min={0} />
-       </Form.Item>
+        <Form.Item
+          label="Spiciness"
+          name="spiciness_scale"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <IconSlider max={10} min={0} />
+        </Form.Item>
       );
     default:
       return null;

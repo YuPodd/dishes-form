@@ -8,6 +8,7 @@ import { typesOfDishes } from "./constants/constants";
 
 export default function App() {
   const { Option } = Select;
+  const [form] = Form.useForm();
   const formLayout = "vertical";
   const [currentDishType, setCurrentDishType] = useState("");
   const dishes = typesOfDishes.map(({ name, id }) => {
@@ -18,6 +19,9 @@ export default function App() {
     );
   });
   let dishType;
+  const onReset = () => {
+    form.resetFields();
+  };
   const onDishChange = (value) => {
     switch (value) {
       case "Pizza":
@@ -39,7 +43,7 @@ export default function App() {
   return (
     <>
       <main className="form-wrapper">
-        <Form
+        <Form form={form} 
           name="control-ref"
           layout={formLayout}
           className="animate__animated animate__fadeInDown"
@@ -90,7 +94,7 @@ export default function App() {
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
-            <Button htmlType="button">Reset</Button>
+            <Button htmlType="button" onClick={onReset}>Reset</Button>
           </Form.Item>
         </Form>
       </main>
