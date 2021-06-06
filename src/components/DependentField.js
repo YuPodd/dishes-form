@@ -1,5 +1,5 @@
 import IconSlider from "./Slider";
-import { Form, Input } from "antd";
+import { Form, InputNumber } from "antd";
 
 export default function DependentField({ currentDishType }) {
   switch (currentDishType) {
@@ -15,18 +15,20 @@ export default function DependentField({ currentDishType }) {
               },
             ]}
           >
-            <Input />
+             <InputNumber/>
           </Form.Item>
           <Form.Item
             label="Diameter"
             name="diameter"
+           
             rules={[
               {
                 required: true,
               },
             ]}
           >
-            <Input />
+             <InputNumber 
+             step="0.1"/>
           </Form.Item>
         </>
       );
@@ -41,7 +43,7 @@ export default function DependentField({ currentDishType }) {
             },
           ]}
         >
-          <Input />
+          <InputNumber/>
         </Form.Item>
       );
     case "soup":

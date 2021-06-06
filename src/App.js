@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState, useRef } from "react";
+import React from "react";
+import { useState } from "react";
 import { Form, Input, Button, Select } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
@@ -12,7 +12,6 @@ export default function App() {
   const [form] = Form.useForm();
   const [currentDishType, setCurrentDishType] = useState("");
   let formRef = React.createRef();
-  
   let dishType;
   const dishes = typesOfDishes.map(({ name, id }) => {
     return (
@@ -21,8 +20,15 @@ export default function App() {
       </Option>
     );
   });
-  const onFinish = (values) => {
-    console.log(values);
+  const sendForm = (values) => {
+    fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", {
+      crossDomain: true,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((response) => alert("form is sended"));
   };
   const resetFields = () => {
     form.resetFields();
@@ -30,15 +36,15 @@ export default function App() {
 
   const onDishChange = (value) => {
     switch (value) {
-      case "Pizza":
+      case "pizza":
         dishType = "pizza";
         break;
 
-      case "Sandwich":
+      case "sandwich":
         dishType = "sandwich";
         break;
 
-      case "Soup":
+      case "soup":
         dishType = "soup";
         break;
       default:
@@ -49,9 +55,10 @@ export default function App() {
   return (
     <>
       <main className="form-wrapper">
-        <Form form={form} 
-        ref={formRef}
-        onFinish={onFinish}
+        <Form
+          form={form}
+          ref={formRef}
+          onFinish={sendForm}
           name="control-ref"
           layout="vertical"
           className="animate__animated animate__fadeInDown"
@@ -76,10 +83,10 @@ export default function App() {
               },
             ]}
           >
-            <Input/>
+            <Input type="time" step="2"></Input>
           </Form.Item>
           <Form.Item
-            name="dish"
+            name="type"
             label="Dish type"
             rules={[
               {
@@ -102,7 +109,9 @@ export default function App() {
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
-            <Button htmlType="button" onClick={resetFields}>Reset</Button>
+            <Button htmlType="button" onClick={resetFields}>
+              Reset
+            </Button>
           </Form.Item>
         </Form>
       </main>
