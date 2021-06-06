@@ -6,11 +6,14 @@ import "./index.css";
 import "animate.css/animate.css";
 import DependentField from "./components/DependentField";
 import { typesOfDishes } from "./constants/constants";
+import ResultOrder from "./components/ResultOrder"
 
 export default function App() {
   const { Option } = Select;
   const [form] = Form.useForm();
   const [currentDishType, setCurrentDishType] = useState("");
+  const [orderIsDone, setOrderIsDone] = useState(false);
+  const [orderResult, setOrderResult] = useState('');
   let formRef = React.createRef();
   let dishType;
   const dishes = typesOfDishes.map(({ name, id }) => {
@@ -28,7 +31,8 @@ export default function App() {
       body: JSON.stringify(values),
     })
       .then((response) => response.json())
-      .then((response) => alert("form is sended"));
+      .then((response) => setOrderIsDone(true))
+      .then((response) => setOrderResult(values));
   };
   const resetFields = () => {
     form.resetFields();
@@ -39,11 +43,9 @@ export default function App() {
       case "pizza":
         dishType = "pizza";
         break;
-
       case "sandwich":
         dishType = "sandwich";
         break;
-
       case "soup":
         dishType = "soup";
         break;
@@ -114,6 +116,7 @@ export default function App() {
             </Button>
           </Form.Item>
         </Form>
+       {orderIsDone ? <ResultOrder orderResult={orderResult} /> : null} 
       </main>
     </>
   );
