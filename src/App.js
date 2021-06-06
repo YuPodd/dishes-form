@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React from 'react';
+import { useState, useRef } from "react";
 import { Form, Input, Button, Select } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
@@ -9,8 +10,10 @@ import { typesOfDishes } from "./constants/constants";
 export default function App() {
   const { Option } = Select;
   const [form] = Form.useForm();
-  const formLayout = "vertical";
   const [currentDishType, setCurrentDishType] = useState("");
+  let formRef = React.createRef();
+  
+  let dishType;
   const dishes = typesOfDishes.map(({ name, id }) => {
     return (
       <Option value={name} key={id}>
@@ -18,10 +21,13 @@ export default function App() {
       </Option>
     );
   });
-  let dishType;
-  const onReset = () => {
+  const onFinish = (values) => {
+    console.log(values);
+  };
+  const resetFields = () => {
     form.resetFields();
   };
+
   const onDishChange = (value) => {
     switch (value) {
       case "Pizza":
@@ -44,8 +50,10 @@ export default function App() {
     <>
       <main className="form-wrapper">
         <Form form={form} 
+        ref={formRef}
+        onFinish={onFinish}
           name="control-ref"
-          layout={formLayout}
+          layout="vertical"
           className="animate__animated animate__fadeInDown"
         >
           <Form.Item
@@ -68,7 +76,7 @@ export default function App() {
               },
             ]}
           >
-            <Input />
+            <Input/>
           </Form.Item>
           <Form.Item
             name="dish"
@@ -94,7 +102,7 @@ export default function App() {
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
-            <Button htmlType="button" onClick={onReset}>Reset</Button>
+            <Button htmlType="button" onClick={resetFields}>Reset</Button>
           </Form.Item>
         </Form>
       </main>
