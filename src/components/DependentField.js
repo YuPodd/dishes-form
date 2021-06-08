@@ -1,7 +1,13 @@
+import React, { useState } from "react";
 import IconSlider from "./Slider";
 import { Form, InputNumber } from "antd";
 
 export default function DependentField({ currentDishType }) {
+  const [value, setValue] = useState(0);
+
+  function handleChange(newValue) {
+    setValue(newValue);
+  }
   switch (currentDishType) {
     case "pizza":
       return (
@@ -15,20 +21,18 @@ export default function DependentField({ currentDishType }) {
               },
             ]}
           >
-             <InputNumber/>
+            <InputNumber />
           </Form.Item>
           <Form.Item
             label="Diameter"
             name="diameter"
-           
             rules={[
               {
                 required: true,
               },
             ]}
           >
-             <InputNumber 
-             step="0.1"/>
+            <InputNumber step="0.1" />
           </Form.Item>
         </>
       );
@@ -43,7 +47,7 @@ export default function DependentField({ currentDishType }) {
             },
           ]}
         >
-          <InputNumber/>
+          <InputNumber />
         </Form.Item>
       );
     case "soup":
@@ -53,11 +57,11 @@ export default function DependentField({ currentDishType }) {
           name="spiciness_scale"
           rules={[
             {
-              required: false,
+              required: true,
             },
           ]}
         >
-          <IconSlider max={10} min={0} />
+          <IconSlider value={value} onChange={handleChange} />
         </Form.Item>
       );
     default:
