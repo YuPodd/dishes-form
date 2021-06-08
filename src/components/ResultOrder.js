@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "antd";
+import { Modal} from "antd";
 
 export default function ResultOrder({ orderResult }) {
   const [isModalVisible, setIsModalVisible] = useState(true);
