@@ -1,19 +1,19 @@
-import React from "react";
-import { useState} from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { Form, Input, Button, Select } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
 import "animate.css/animate.css";
 import DependentField from "./components/DependentField";
 import { typesOfDishes } from "./constants/constants";
-import ResultOrder from "./components/ResultOrder"
+import ResultOrder from "./components/ResultOrder";
 
 export default function App() {
   const { Option } = Select;
   const [form] = Form.useForm();
   const [currentDishType, setCurrentDishType] = useState("");
   const [orderIsDone, setOrderIsDone] = useState(false);
-  const [orderResult, setOrderResult] = useState('');
+  const [orderResult, setOrderResult] = useState("");
   let dishType;
   const dishes = typesOfDishes.map(({ name, id }) => {
     return (
@@ -32,10 +32,14 @@ export default function App() {
       .then((response) => response.json())
       .then((response) => setOrderIsDone(true))
       .then((response) => setOrderResult(values));
-    };
-  const resetFields = () => {
-    form.resetFields();
+    resetFields();
   };
+
+  function resetFields() {
+    form.resetFields();
+    setOrderIsDone(false);
+    setOrderResult("");
+  }
 
   const onDishChange = (value) => {
     switch (value) {
@@ -53,6 +57,7 @@ export default function App() {
     }
     setCurrentDishType(dishType);
   };
+
   return (
     <>
       <main className="form-wrapper">
@@ -114,7 +119,7 @@ export default function App() {
             </Button>
           </Form.Item>
         </Form>
-       {orderIsDone ? <ResultOrder orderResult={orderResult} /> : null} 
+        {orderIsDone ? <ResultOrder orderResult={orderResult} /> : null}
       </main>
     </>
   );
