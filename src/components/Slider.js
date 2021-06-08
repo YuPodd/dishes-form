@@ -1,14 +1,14 @@
-import React from 'react';
+import React,{ createRef }  from 'react';
 import "antd/dist/antd.css";
 import "../index.css";
 import { Slider } from 'antd';
 import { MinusOutlined, FireOutlined } from '@ant-design/icons';
 
 export default class IconSlider extends React.Component {
-  state = {
-    value: 0,
-  };
-
+  constructor(props) {
+    super(props)
+    this.state = { value: 0 };
+   }
   handleChange = value => {
     this.setState({ value });
   };

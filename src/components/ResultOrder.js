@@ -3,7 +3,7 @@ import { Modal, Button } from "antd";
 
 export default function ResultOrder({ orderResult }) {
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const { name, preparation_time, type } = orderResult;
+  const { name, preparation_time, type,  } = orderResult;
   const handleClose = () => {
     setIsModalVisible(false);
   };

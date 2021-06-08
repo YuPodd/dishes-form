@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Form, Input, Button, Select } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
@@ -14,7 +14,6 @@ export default function App() {
   const [currentDishType, setCurrentDishType] = useState("");
   const [orderIsDone, setOrderIsDone] = useState(false);
   const [orderResult, setOrderResult] = useState('');
-  let formRef = React.createRef();
   let dishType;
   const dishes = typesOfDishes.map(({ name, id }) => {
     return (
@@ -33,7 +32,7 @@ export default function App() {
       .then((response) => response.json())
       .then((response) => setOrderIsDone(true))
       .then((response) => setOrderResult(values));
-  };
+    };
   const resetFields = () => {
     form.resetFields();
   };
@@ -59,7 +58,6 @@ export default function App() {
       <main className="form-wrapper">
         <Form
           form={form}
-          ref={formRef}
           onFinish={sendForm}
           name="control-ref"
           layout="vertical"

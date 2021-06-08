@@ -53,7 +53,7 @@ export default function DependentField({ currentDishType }) {
           name="spiciness_scale"
           rules={[
             {
-              required: true,
+              required: false,
             },
           ]}
         >
